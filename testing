@@ -1,0 +1,553 @@
+{
+  "name": "clickup agent: Template",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "08a47045-3416-4305-bf20-46da63f93f35",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        660,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "get_tasks",
+        "description": "call this tool to get all tasks in clickup",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"da1a4176-563c-4166-ae87-a8fdaf6cd4ad\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1500,\n        1580\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"operation\": \"getAll\",\n        \"team\": \"9009074051\",\n        \"space\": \"90152594918\",\n        \"folderless\": true,\n        \"list\": \"={{ $json.query }}\",\n        \"filters\": {}\n      },\n      \"id\": \"1255a0a5-7b7c-4b19-9d12-76f688c342c8\",\n      \"name\": \"ClickUp\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1660,\n        1580\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"9c7e3a5c-a44e-4625-84c6-05e6df295663\",\n      \"name\": \"Aggregate\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1960,\n        1580\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"6e69b9b9-28fc-4b1f-a5f6-d220e882a689\",\n              \"name\": \"id\",\n              \"value\": \"={{ $json.id }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"e310a8ed-fde0-4eaf-bba6-ceaf66122913\",\n              \"name\": \"name\",\n              \"value\": \"={{ $json.name }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"7989d94a-c28f-4b03-967e-9d784c58517b\",\n              \"name\": \"text_content\",\n              \"value\": \"={{ $json.text_content }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"1f65c8a1-8f76-46f1-b2b0-dae9ab44a53b\",\n              \"name\": \"status\",\n              \"value\": \"={{ $json.status.status }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"661c7da3-3025-4f29-9f72-2836ea88482d\",\n              \"name\": \"description\",\n              \"value\": \"={{ $json.description }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"6aa0f66d-7a0f-4e08-bd27-17d5cab8f899\",\n              \"name\": \"date_created\",\n              \"value\": \"={{ $json.date_created.toDateTime('ms') }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"731da5f0-c9af-4ab9-aa90-c69579316050\",\n              \"name\": \"date_updated\",\n              \"value\": \"={{ $json.date_updated.toDateTime('ms') }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"b7f52ec1-0632-463f-840c-36adbcbe2cd6\",\n              \"name\": \"tag name\",\n              \"value\": \"={{ $json.tags[0].name }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"92f87a8e-9d6e-44dd-9b2e-8eefb0761720\",\n              \"name\": \"start_date\",\n              \"value\": \"={{ $json.start_date }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"f9a020dc-b011-4fb3-93fd-c7ed48639695\",\n              \"name\": \"time_spent\",\n              \"value\": \"={{ ($json.time_spent / 3600000).round(3) }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"69e57320-36f5-4464-9477-6f9dc924e34c\",\n              \"name\": \"space id\",\n              \"value\": \"={{ $json.space.id }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"e9983cee-f450-46e9-ac4a-c011d0f904c4\",\n              \"name\": \"folder id\",\n              \"value\": \"={{ $json.folder.id }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"152e74f7-0a20-4ac9-abf3-955426f7ea7e\",\n              \"name\": \"project id\",\n              \"value\": \"={{ $json.project.id }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"d9ab0043-dca4-4557-aaa1-1ff1ba384e82\",\n              \"name\": \"list name\",\n              \"value\": \"={{ $json.list.name }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"2ad09fb2-7bf7-4e17-8f89-816f35493a30\",\n      \"name\": \"Edit Fields\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1800,\n        1580\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"68ddb5fd-d1ca-4ffc-b5cc-4f5997f6344a\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json.response }}\",\n              \"type\": \"array\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"31578750-6536-4492-b122-7d56a239ad60\",\n      \"name\": \"Edit Fields1\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        2120,\n        1580\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## Get tasks\",\n        \"height\": 227.44730679156908,\n        \"width\": 704.0374707259953\n      },\n      \"id\": \"2d7634b3-b4ae-41b5-988e-b9ca0b5a674d\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1540,\n        1520\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Aggregate\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields1\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Edit Fields\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": \"90152594918\"\n      }\n    ]\n  }\n}"
+      },
+      "id": "fa4e4e8c-77b0-4863-8fd2-0dcfc5b502dc",
+      "name": "get_tasks",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1000,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "create_tasks",
+        "description": "call this tool to get all tasks in clickup.",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"68ddb5fd-d1ca-4ffc-b5cc-4f5997f6344a\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json.response }}\",\n              \"type\": \"array\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"cb111ff0-8c57-480b-ab39-3598fa6d93f8\",\n      \"name\": \"Edit Fields3\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        2320,\n        1620\n      ]\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"0ffaf0db-d239-42db-b318-2ea8e30de067\",\n      \"name\": \"Aggregate1\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2160,\n        1620\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"09ba85c2-cc03-443c-b966-493b9fcc12c2\",\n              \"name\": \"list\",\n              \"value\": \"={{ $json.query.list }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"8dcd4247-e4f3-40bd-b2d2-baf183cf24e8\",\n              \"name\": \"name\",\n              \"value\": \"={{ $json.query.name }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"daf66cb1-b235-4c9f-bd66-73ee3d3ee02b\",\n              \"name\": \"content\",\n              \"value\": \"={{ $json.query.additionalFields.content }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"5ef4f1da-73c5-4818-aa66-5f322f439872\",\n              \"name\": \"priority\",\n              \"value\": \"={{ $json.query.additionalFields.priority }}\",\n              \"type\": \"number\"\n            },\n            {\n              \"id\": \"b2471d0a-8845-4b8b-adf5-da232189022e\",\n              \"name\": \"status\",\n              \"value\": \"={{ $json.query.additionalFields.status }}\",\n              \"type\": \"string\"\n            },\n            {\n              \"id\": \"ec314732-1bee-468b-a1ef-5ad874d85dc2\",\n              \"name\": \"tags\",\n              \"value\": \"={{ $json.query.additionalFields.tags }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"20154a79-274b-429d-946c-f6b0dd6fab1f\",\n      \"name\": \"Edit Fields2\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1840,\n        1620\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## create tasks\",\n        \"height\": 235.00140515222478,\n        \"width\": 784.9742388758782\n      },\n      \"id\": \"87d24a82-b2f3-4752-af98-dcf65a441cfb\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1660,\n        1560\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"team\": \"9009074051\",\n        \"space\": \"90152594918\",\n        \"folderless\": true,\n        \"list\": \"={{ $json.list }}\",\n        \"name\": \"={{ $json.name }}\",\n        \"additionalFields\": {\n          \"content\": \"={{ $json.content }}\",\n          \"priority\": \"={{ 0 }}\",\n          \"status\": \"={{ $json.status }}\",\n          \"tags\": \"={{ $json.tags }}\"\n        }\n      },\n      \"id\": \"06fa014f-dc76-4204-b36c-ba37801b9671\",\n      \"name\": \"ClickUp1\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2000,\n        1620\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {},\n      \"id\": \"87d9c4e5-d96e-41ca-93c1-e8a99164cad3\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1680,\n        1620\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Aggregate1\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields3\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Edit Fields2\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp1\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp1\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate1\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields2\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"list\": \"901505728317\",\n          \"name\": \"Review the sales from last month for user U065ADVV2BA (Imperol)\",\n          \"additionalFields\": {\n            \"content\": \"A task to review the sales for user U065ADVV2BA for the previous month.\",\n            \"priority\": 3,\n            \"status\": \"To Do\",\n            \"tags\": \"Imperol\"\n          }\n        }\n      }\n    ]\n  }\n}\n\n\n\n\n\n\n\n\n",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n    \"list\": \"901504622469\",\n    \"name\": \"{{ $json['Task name'] }}\",\n    \"additionalFields\": {\n      \"content\": \"{{ $json.description }}\",\n      \"priority\": 0,\n      \"status\": \"planning\",\n      \"tags\": \"{{ $json.Tag }}\"\n    }\n}"
+      },
+      "id": "bcf61238-b4bc-4615-94ed-10d0ad6b9b82",
+      "name": "create_tasks",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1120,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "add_task_to_list",
+        "description": "call this tool to add a task to a list",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"content\": \"## add task to list\",\n        \"height\": 209.39924973859257,\n        \"width\": 675.5199160626935\n      },\n      \"id\": \"095d4afd-c966-473b-8362-e45e4919eefe\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1740,\n        1620\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"ae2d35a8-9a45-495d-9b95-1ee0e705a816\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"fd8e8654-a1fe-4263-9e06-5d9437a98f02\",\n      \"name\": \"Edit Fields5\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        2258.8288929691753,\n        1665.8859286461147\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"370735d1-54be-404e-ad7c-5c9460798451\",\n              \"name\": \"query\",\n              \"value\": \"={{ $json.query.query.parseJson() }}\",\n              \"type\": \"object\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"d5bb7ea6-2e99-4c69-8375-1de1f109f242\",\n      \"name\": \"Edit Fields4\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1938.8288929691753,\n        1665.8859286461147\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"taskList\",\n        \"taskId\": \"={{ $json.query.task_id }}\",\n        \"listId\": \"={{ $json.query.list_id }}\"\n      },\n      \"id\": \"34950415-de00-495a-aa23-67eb7c97a968\",\n      \"name\": \"ClickUp2\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2098.8288929691753,\n        1665.8859286461147\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {},\n      \"id\": \"8327044e-540a-4d27-9d8a-48edb37487d6\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1778.8288929691753,\n        1665.8859286461147\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Edit Fields4\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp2\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp2\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields5\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields4\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {}\n}",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"query\": \"{\\\"taskId\\\":\\\"rrgtrgr\\\",\\\"listId\\\":\\\"ggsdgsdgsd\\\"}\"\n}\n"
+      },
+      "id": "536efdbc-4efd-4034-ad74-5719aaa77a50",
+      "name": "add_task_to_list",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "Get_task_to_list",
+        "description": "Call this tool to get the lists we have on our clickup",
+        "source": "parameter",
+        "workflowJson": "\n\n\n{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"3f991be7-3d71-43c2-8aed-8f153e1659c0\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1660,\n        1880\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"list\",\n        \"operation\": \"getAll\",\n        \"team\": \"9009074051\",\n        \"space\": \"90152594918\",\n        \"folderless\": true,\n        \"limit\": 100,\n        \"filters\": {}\n      },\n      \"id\": \"baf0a3a2-6713-4d1d-94e1-fcd3c2c0887b\",\n      \"name\": \"ClickUp3\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1840,\n        1880\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## get lists\",\n        \"height\": 218.27447306791572,\n        \"width\": 610.1508196721311\n      },\n      \"id\": \"e8705cc6-c550-4810-8f48-af817f566975\",\n      \"name\": \"Sticky Note4\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1620,\n        1820\n      ]\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"6140032d-1b43-4a1e-9284-c524ba6489a1\",\n      \"name\": \"Aggregate3\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2040,\n        1880\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp3\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp3\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate3\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"query\": \"{\\\"id\\\":\\\"901505561225\\\",\\\"description\\\":\\\"All these agents needs to be tested before sunday evening\\\"}\"\n        }\n      }\n    ]\n  }\n}\n\n\n\n\n\n",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"query\": \"{\\\"taskId\\\":\\\"rrgtrgr\\\",\\\"listId\\\":\\\"ggsdgsdgsd\\\"}\"\n}\n"
+      },
+      "id": "46873e7d-6ac0-47d2-9f05-5b5af229eecd",
+      "name": "Get_lists",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        760,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "delete_task",
+        "description": "call this tool to delete a task",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"9aa02697-aaf7-4223-bb59-5785c5a2b280\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1540,\n        1480\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"ae2d35a8-9a45-495d-9b95-1ee0e705a816\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json }}\",\n              \"type\": \"string\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"5e11d1b0-59eb-4a89-b180-11776b3768a4\",\n      \"name\": \"Edit Fields10\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1920,\n        1480\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"operation\": \"delete\",\n        \"id\": \"={{ $json.query.query }}\"\n      },\n      \"id\": \"aafe24a3-8668-41b7-9d4e-0347a1cd1d44\",\n      \"name\": \"ClickUp4\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1720,\n        1480\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## Delete list\",\n        \"height\": 226.1674300994901,\n        \"width\": 605.8669664324747\n      },\n      \"id\": \"76e6b8e0-1456-4d3f-953e-d26d92032a3b\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1500,\n        1420\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp4\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp4\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields10\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"query\": \"86c05upqg\"\n        }\n      }\n    ]\n  }\n}",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"query\": \"[{\\\"task_id\\\":\\\"901505561225\\\",\\\"description\\\":\\\"All these agents needs to be tested before sunday evening\\\"}]\"\n}\n"
+      },
+      "id": "d0b2979b-3f17-49cf-97eb-5cc2a250235c",
+      "name": "delete_task",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1240,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "create_folder",
+        "description": "call this tool to create a new folder",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"e6f55128-0818-491a-aad7-34614fe5ee42\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1480,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"options\": {}\n      },\n      \"id\": \"31c2fbd5-0bd5-4de7-8788-cbc0222e76cd\",\n      \"name\": \"Aggregate2\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1800,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"32961fc5-9305-4acb-be40-f292ff51116d\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json.data }}\",\n              \"type\": \"array\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"6e745f79-5302-40dd-b1a1-7b2ec9de9675\",\n      \"name\": \"Edit Fields6\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        1960,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"folder\",\n        \"team\": \"9009074051\",\n        \"space\": \"90152594918\",\n        \"name\": \"={{ $json.query.query }}\"\n      },\n      \"id\": \"0bfe0316-0836-438f-80c6-80749233bdd0\",\n      \"name\": \"ClickUp5\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1640,\n        1600\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## create a new folder\",\n        \"height\": 239.0198642322395,\n        \"width\": 501.46278606255737\n      },\n      \"id\": \"d2384cc6-67d0-41cf-abf3-570c242d732b\",\n      \"name\": \"Sticky Note6\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1600,\n        1520\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp5\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Aggregate2\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields6\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp5\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate2\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"query\": \"86c05upqg\"\n        }\n      }\n    ]\n  }\n}\n\n\n\n\n\n\n\n\n",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"query\": \"[{\\\"task_id\\\":\\\"901505561225\\\",\\\"description\\\":\\\"All these agents needs to be tested before sunday evening\\\"}]\"\n}"
+      },
+      "id": "4175f34f-a7aa-4ce3-8fe2-cf8ab98c5a99",
+      "name": "create_folder",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1360,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Huggin - The project Manager\n\nWhat are your capabilities\n1. Create new tasks\n2. Get all lists in our workspace\n3. Add new tasks to different lists\n4. Delete new tasks\n5. Create new client folders\nUsage\n1. Inside each tool is a workflow json that contains the tool.\n2. Use the chat to command any tool to your desired task\n## Creating new tasks\nCommand: Create a task in `list name` called `task title` with the descriptions as `your desired content`\n## Get tasks\nCommand: Get me te `task name` and all details associatesd to it\n## add task to list\nAdd the `task name` to the `list name`\n## GET LISTS\nGet the list called `list name`\n## Delete task\nDelete the task called `task name`\n## Create folder\nCreate a new folder called ` new folder name`",
+        "height": 396.93145479463067,
+        "width": 406.1277740874614
+      },
+      "id": "3ed30697-c570-473f-98a5-2f5832e60e44",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        360,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "name": "create_space_tag",
+        "description": "call this tool to create a new space tag",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"content\": \"## Create space tag\",\n        \"height\": 234.98941451990632,\n        \"width\": 886.6068384074941\n      },\n      \"id\": \"ffca03bf-2da8-4188-905a-8f50d676ce8f\",\n      \"name\": \"Sticky Note8\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1940,\n        1540\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"68ddb5fd-d1ca-4ffc-b5cc-4f5997f6344a\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json.response }}\",\n              \"type\": \"array\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"4f22a971-dbdd-4634-bbf3-cc45905d0ca0\",\n      \"name\": \"Edit Fields13\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        2640,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"f0d83792-0cb2-4c89-91e6-ec94eed77356\",\n      \"name\": \"Aggregate4\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2480,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"jsCode\": \"// Function to generate a random hex color\\nfunction getRandomHexColor() {\\n    const letters = '0123456789ABCDEF';\\n    let color = '#';\\n    for (let i = 0; i < 6; i++) {\\n        color += letters[Math.floor(Math.random() * 16)];\\n    }\\n    return color;\\n}\\n\\n// Generate two random hex colors\\nconst color1 = getRandomHexColor();\\nconst color2 = getRandomHexColor();\\n\\n// Return the colors as an object with two columns\\nreturn [\\n    {\\n        color1: color1,\\n        color2: color2\\n    }\\n];\\n\"\n      },\n      \"id\": \"4c75aa0c-6419-4f6e-89e4-013f3931a018\",\n      \"name\": \"Code\",\n      \"type\": \"n8n-nodes-base.code\",\n      \"typeVersion\": 2,\n      \"position\": [\n        2160,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"spaceTag\",\n        \"space\": \"={{ $('Execute Workflow Trigger').item.json.query.space }}\",\n        \"name\": \"={{ $('Execute Workflow Trigger').item.json.query.name }}\",\n        \"foregroundColor\": \"={{ $json.color1 }}\",\n        \"backgroundColor\": \"={{ $json.color2 }}\"\n      },\n      \"id\": \"004b2a71-0148-44de-bc95-790fcf5b837b\",\n      \"name\": \"ClickUp6\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2320,\n        1600\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {},\n      \"id\": \"505d3375-186b-48e7-9a26-4f31366d8f2c\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2000,\n        1600\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Aggregate4\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields13\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Code\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp6\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp6\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate4\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Code\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"space\": \"90152594918\",\n          \"name\": \"test acc\"\n        }\n      }\n    ]\n  }\n}\n\n\n\n\n\n\n\n\n",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n      \"space\": \"90152233824\",\n      \"name\": \"demoss\"\n}"
+      },
+      "id": "4ff90fe9-e0a1-4e51-9c3a-fd680cf40db8",
+      "name": "create_tag",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1480,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "add_task_tag",
+        "description": "call this tool to add a new tag to a task",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"9a34617b-d2bc-48fc-a41d-c4fd901c4acb\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1892.8893302107726,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"taskTag\",\n        \"taskId\": \"={{ $json.query.taskid }}\",\n        \"tagName\": \"={{ $json.query.tagid }}\",\n        \"additionalFields\": {}\n      },\n      \"id\": \"132471f6-59de-4f19-95ff-5bc7c0feb3ad\",\n      \"name\": \"ClickUp7\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2052.8893302107726,\n        1600\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"02b3bb0c-08b4-48fd-829b-244689eb34dd\",\n      \"name\": \"Aggregate5\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2212.8893302107726,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"assignments\": {\n          \"assignments\": [\n            {\n              \"id\": \"68ddb5fd-d1ca-4ffc-b5cc-4f5997f6344a\",\n              \"name\": \"response\",\n              \"value\": \"={{ $json.response }}\",\n              \"type\": \"array\"\n            }\n          ]\n        },\n        \"options\": {}\n      },\n      \"id\": \"82494007-ecf4-4eff-8146-c6c24e42339a\",\n      \"name\": \"Edit Fields14\",\n      \"type\": \"n8n-nodes-base.set\",\n      \"typeVersion\": 3.4,\n      \"position\": [\n        2372.8893302107726,\n        1600\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## add tag to task\",\n        \"height\": 234.98941451990632,\n        \"width\": 739.496168618267\n      },\n      \"id\": \"360eb5a3-5b26-4470-82d8-524edfc23ca2\",\n      \"name\": \"Sticky Note9\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1820,\n        1540\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp7\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp7\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate5\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Aggregate5\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Edit Fields14\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"taskid\": \"90152233824\",\n          \"tagid\": \"demoss\"\n        }\n      }\n    ]\n  }\n}\n\n\n\n\n\n\n\n\n",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\"taskid\": \"90152233824\",\n      \"tagid\": \"demoss\"\n    }\n  "
+      },
+      "id": "8822de22-c847-4e25-a621-b3b69d2f617e",
+      "name": "add_task_tag",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1600,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "Get_all_space_tags",
+        "description": "call this tool to get all the tags we have in clickup",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"d0e39fe2-7042-49fd-8b37-1e46a43e5aa5\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1900,\n        1660\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"resource\": \"spaceTag\",\n        \"operation\": \"getAll\",\n        \"space\": \"={{ $json.query.spaceid }}\"\n      },\n      \"id\": \"12c1898e-f3c2-4e17-a36d-60d2a7032760\",\n      \"name\": \"ClickUp8\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2080,\n        1660\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"1d677c96-c9e0-4424-9149-37ea5a040ba2\",\n      \"name\": \"Aggregate6\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2260,\n        1660\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## Get all space tags\",\n        \"height\": 246.92583954246737,\n        \"width\": 583.8111563993118\n      },\n      \"id\": \"75c12863-af54-4984-b608-b89ca2bd7767\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1860,\n        1600\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp8\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp8\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate6\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"spaceid\": \"90152233824\"\n        }\n      }\n    ]\n  }\n}",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n  \"spaceid\": \"90152233824\"\n    }"
+      },
+      "id": "b2c73705-3f8f-455d-b5ec-ece322c3af34",
+      "name": "Get_all_space_tags",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1740,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## tools",
+        "height": 213.9207871306793,
+        "width": 1795.1843479132694,
+        "color": 6
+      },
+      "id": "11a46375-c59a-4962-a53d-9bb810c112f7",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        502.83425038727546,
+        1160
+      ]
+    },
+    {
+      "parameters": {
+        "name": "update_tast_content",
+        "description": "call this tool to update the content for a task",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {},\n      \"id\": \"d9c2e691-7a46-4086-9411-796696d79f72\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1540,\n        1540\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"operation\": \"update\",\n        \"id\": \"={{ $json.query.id }}\",\n        \"updateFields\": {\n          \"content\": \"={{ $json.query.updateFields.content }}\",\n          \"name\": \"={{ $json.query.updateFields.name }}\"\n        }\n      },\n      \"id\": \"ba249a63-e16b-4abd-8b75-f01dd06e2770\",\n      \"name\": \"ClickUp10\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1720,\n        1540\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"5d098d7b-8405-48c1-ab8b-7e6016e2a52b\",\n      \"name\": \"Aggregate8\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1880,\n        1540\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## update content and name\",\n        \"height\": 230.0596318700483,\n        \"width\": 546.1865392839151\n      },\n      \"id\": \"c11e579c-a881-424f-acc2-0258a329da5e\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        1500,\n        1480\n      ]\n    }\n  ],\n  \"connections\": {\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp10\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"ClickUp10\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate8\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {\n    \"Execute Workflow Trigger\": [\n      {\n        \"query\": {\n          \"id\": \"86c01tbew\",\n          \"updateFields\": {\n            \"content\": \"Create new dashboards for project management tools - User: U065ADVV2BA (Imperol)\",\n            \"name\": \"title\"\n          }\n        }\n      }\n    ]\n  }\n}",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n      \"id\": \"86c05yp7e\",\n      \"updateFields\": {\n        \"content\": \"add more tests for the email deliverability\",\n        \"name\": \"title\"\n      }\n    }"
+      },
+      "id": "f31425b8-f5c3-44e3-92a5-3ff167e91098",
+      "name": "update_tast_content",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1880,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## initial prompt \n\nYou are a helpful clickup assistant to help with all tasks posible in clickup. I will provide you with aset of tools to enable you do this\n\nFor task creation, adhere to these : \n\nInteger mapping as 1 : Urgent, 2 : High, 3 : Normal, 4 : Low\n\nAdhere to all output methods\n\nProvide as much relevant information for the description as posible\n\nthe space id is :90152233824 for Huggin and 90152743936 for Client Dashboards\n\nHuginn contains all the tasks we have in our our dat to day tasks\n",
+        "height": 406.1180033017239,
+        "width": 547.1363964525666
+      },
+      "id": "3fae63bf-866f-43f8-9533-09729119955d",
+      "name": "Sticky Note14",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3100,
+        1000
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "d5d3856c-863f-4b8e-8f46-1538be2b4466",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        2180,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "name": "update_tast_status",
+        "description": "call this tool to update the status for a task",
+        "source": "parameter",
+        "workflowJson": "{\n  \"meta\": {\n    \"instanceId\": \"f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d\"\n  },\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"aggregate\": \"aggregateAllItemData\",\n        \"destinationFieldName\": \"response\",\n        \"options\": {}\n      },\n      \"id\": \"54f31784-03cc-4b9e-9e62-221a516c06a7\",\n      \"name\": \"Aggregate9\",\n      \"type\": \"n8n-nodes-base.aggregate\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2460,\n        1520\n      ]\n    },\n    {\n      \"parameters\": {\n        \"authentication\": \"oAuth2\",\n        \"operation\": \"update\",\n        \"id\": \"={{ $json.query.id }}\",\n        \"updateFields\": {\n          \"status\": \"={{ $json.query.content }}\"\n        }\n      },\n      \"id\": \"2eff83c2-0262-44db-a0aa-6178ea2adc01\",\n      \"name\": \"ClickUp11\",\n      \"type\": \"n8n-nodes-base.clickUp\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2280,\n        1520\n      ],\n      \"credentials\": {\n        \"clickUpOAuth2Api\": {\n          \"id\": \"uz64yTHBGinjZOG3\",\n          \"name\": \"ClickUp account\"\n        }\n      }\n    },\n    {\n      \"parameters\": {},\n      \"id\": \"e9cb34e8-e526-4997-8896-83967e90e8fe\",\n      \"name\": \"Execute Workflow Trigger\",\n      \"type\": \"n8n-nodes-base.executeWorkflowTrigger\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2100,\n        1520\n      ]\n    },\n    {\n      \"parameters\": {\n        \"content\": \"## update status\",\n        \"height\": 218.38302655837361,\n        \"width\": 568.2423493170786\n      },\n      \"id\": \"d8598e0f-2af2-4fd9-a2bb-0468ba81dcc3\",\n      \"name\": \"Sticky Note1\",\n      \"type\": \"n8n-nodes-base.stickyNote\",\n      \"typeVersion\": 1,\n      \"position\": [\n        2060,\n        1460\n      ]\n    }\n  ],\n  \"connections\": {\n    \"ClickUp11\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"Aggregate9\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    },\n    \"Execute Workflow Trigger\": {\n      \"main\": [\n        [\n          {\n            \"node\": \"ClickUp11\",\n            \"type\": \"main\",\n            \"index\": 0\n          }\n        ]\n      ]\n    }\n  },\n  \"pinData\": {}\n}",
+        "specifyInputSchema": true,
+        "jsonSchemaExample": " {\n      \"id\": \"86c05yp7e\",\n       \"content\": \"to do\"\n      \n    }"
+      },
+      "id": "23f1dfae-b09a-43c9-a92f-a95c87cf238e",
+      "name": "update_tast_status",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        2040,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o-mini",
+        "options": {
+          "baseURL": "https://openrouter.ai/api/v1"
+        }
+      },
+      "id": "b0521a47-04c5-4baf-9830-6214d82279b9",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        540,
+        1220
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "pkL0WNdZQPKQ4o0m",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Hi there! 👋\nMy name is Em. How can I assist you today with your clickup tasks?",
+        "options": {
+          "allowFileUploads": true,
+          "allowedFilesMimeTypes": "*",
+          "loadPreviousSession": "memory"
+        }
+      },
+      "id": "71218f89-496d-48c1-80a6-f00c2a512a4b",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        900
+      ],
+      "webhookId": "3787a5ef-a5d5-4193-b360-98af967eab8a"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are Huggin, a helpful personal assistant to help me with all tasks possible in ClickUp I will provide you with aset of tools to enable you do this\n\nFor task creation, adhere to these : \n\nInteger mapping as 1 : Urgent, 2 : High, 3 : Normal, 4 : Low\n\nAdhere to all output formats\n\nHuginn contains all the tasks we have in our daily tasks. the space id is :90152594918\n\nThis is what the thought process will be\n1. Get the lists in the space available to understand the context\n2. To create a new task, send the data as follows,  the task name, the list id, description, priority, tag and status. Only if the output is correct should you send the data to the tool\n3. To get all tasks, always send the list id as in the case you are asked to list all the tasks, or foa apecific table\n4. To add task to list, get the list id of the current task and the one we need to move the task to. Adhere to the data format set for this\n5. When creting tasks, if no data fo the ourput is provides, provuded a default status or Normal, ant the status as To do\n6. To delete a task, first get the task id, and send it to the tools for deletion\n7. To add tag to a task, get the task id and update the task as per the output format\n8. To update the task content, get the task, and send the content and task id as the outout directs. To get task use the get tasks tool\n9. To update the task status, first Get the task Id, and the desired status.. Adhere to the out put structure for the status as to to, In progress and complete. Default is to do. \n\nIN CLICKUP, THIS IS what you should remember\nTags in tasks represent a client name. When you are aseked about a client, am asking about the tag. If I ask about the tag, am asking about the client\n\nfor context the day Today is {{ $now.format('cccc ') }} the {{ $now.format('dd-MM-yyyy') }} at {{ $now.format('hh:mm:ss') }}\n\n\n\n\n"
+        }
+      },
+      "id": "4d74c481-c69b-40be-882a-85b2ae535932",
+      "name": "HUGGIN",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1360,
+        900
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## setup\nN8n agents are the easiest way to get AI into literally any system\n\nHiggin is an Agent that makes thi sposible.\nYou can use this agent to perform up to 10 actions within clickup\n\nUsage\n1. Each of the `tools` contains a workflow that represendsa whole tool\n2. You will open each of the nodes, paste the workflow on your canvas, change akk the fields and then Paste back to the respective tool\n3. Make sure to cut/delete the `tool` you paste on yuir workflow. \nThe reason is this, each tool starts with an execute node, and each workflow can only have one execute node on each workflow. The workaround for this is wrapping these mini workflows within the tool and therefore acn load multiple workflows within one\n\n4. You can customize the prompt to fit your model",
+        "height": 424.91298300862,
+        "width": 603.3532527889892
+      },
+      "id": "c0071a75-cbd5-4604-9222-6d35d6d1bca3",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        960
+      ]
+    },
+    {
+      "parameters": {
+        "content": "# Tool Functions Overview\n\n### 1. **OpenAI Chat Model1**\n   - **Function:** Utilizes the OpenAI language model for generating responses, performing tasks based on natural language inputs, and interacting with users.\n\n### 2. **Window Buffer Memory**\n   - **Function:** Maintains a buffer or short-term memory of the conversation, allowing the system to remember recent interactions and context within a session.\n\n### 3. **Get_lists**\n   - **Function:** Retrieves all available lists from the system (likely task or project lists from an API).\n\n### 4. **add_task_to_list**\n   - **Function:** Adds a new task to a specific list, enabling task management within the system.\n\n### 5. **get_tasks**\n   - **Function:** Retrieves tasks from a specific list or project, potentially filtering by parameters like status or due dates.\n\n### 6. **create_tasks**\n   - **Function:** Creates a new task in a designated list or project with custom details like deadlines, assignments, and descriptions.\n\n### 7. **delete_task**\n   - **Function:** Deletes a specific task from a list or project.\n\n### 8. **create_folder**\n   - **Function:** Creates a new folder within the system, possibly for organizing tasks, projects, or documents.\n\n### 9. **create_tag**\n   - **Function:** Creates a new tag that can be used for categorizing or filtering tasks and items.\n\n### 10. **add_task_tag**\n   - **Function:** Adds a tag to a specific task to help with categorization and easier retrieval.\n\n### 11. **Get_all_space_tags**\n   - **Function:** Retrieves all the tags available within a workspace or system for categorization and task management.\n\n### 12. **update_task_content**\n   - **Function:** Updates the content of a specific task, allowing changes to the task description, notes, or other relevant details.\n\n### 13. **update_task_status**\n   - **Function:** Updates the status of a task (e.g., from \"in progress\" to \"completed\" or \"pending\"), helping with workflow management.\n\n### 14. **Calculator**\n   - **Function:** Performs calculations, possibly for data-related tasks, project management metrics, or budget estimations.\n",
+        "height": 238.88195588331337,
+        "width": 1155.4458564352983
+      },
+      "id": "d6d920d2-7097-4b20-bd5a-4b4716560e98",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        1420
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "get_tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_lists": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "When chat message received",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_task_to_list": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_tasks": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete_task": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_folder": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "create_tag": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "add_task_tag": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get_all_space_tags": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_tast_content": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update_tast_status": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "HUGGIN",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ac6a36b7-ff82-4e16-978a-33f5c07ff18f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f1b929edc56cc4e5c2ccd43eaf30f01270541896291376539fd5cd5698a2574d"
+  },
+  "id": "9MTQPuaouXBPWy3M",
+  "tags": [
+    {
+      "name": "AI",
+      "id": "HdBGbJiSt7B1Y5ub",
+      "createdAt": "2024-09-18T21:11:14.102Z",
+      "updatedAt": "2024-09-18T21:11:14.102Z"
+    },
+    {
+      "name": "clickup_tools",
+      "id": "Eh9qBDozhqrFnP2U",
+      "createdAt": "2024-09-18T21:11:13.403Z",
+      "updatedAt": "2024-09-18T21:11:13.403Z"
+    }
+  ]
+}
